@@ -1,5 +1,12 @@
 # express-fileupload Examples
 
+## how do i use this?
+
+- Install dependencies
+ > npm install --save express-fileupload
+- Run the server
+ > node server.js
+
 ## Basic File Upload
 **Your node.js code:**
 ```javascript
