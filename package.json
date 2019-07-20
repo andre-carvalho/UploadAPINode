@@ -1,0 +1,27 @@
+{
+  "name": "uploadapinode",
+  "version": "0.1.0",
+  "description": "File upload using Express and Node",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andre-carvalho/UploadAPINode.git"
+  },
+  "keywords": [
+    "upload",
+    "nodejs"
+  ],
+  "author": "André Carvalho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andre-carvalho/UploadAPINode/issues"
+  },
+  "homepage": "https://github.com/andre-carvalho/UploadAPINode#readme",
+  "dependencies": {
+    "express-fileupload": "^1.1.5"
+  }
+}
