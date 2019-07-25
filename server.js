@@ -12,6 +12,7 @@ app.use('/form', express.static(__dirname + '/index.html'));
 // default options
 app.use(fileUpload());
 
+// to test API response
 app.get('/ping', function(req, res) {
   res.send('pong');
 });

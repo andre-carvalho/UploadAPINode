@@ -1,73 +1,21 @@
-# express-fileupload Examples
+# UploadAPINode
+
+One API to test the Nodejs, express and express-fileupload for perform a upload images in single or multi mode.
 
 ## how do i use this?
 
-- Install dependencies
- > npm install --save express-fileupload
+- Install dependencies described in package.json
+ > npm i
 - Run the server
  > node server.js
 
-## Basic File Upload
-**Your node.js code:**
-```javascript
-const express = require('express');
-const fileUpload = require('express-fileupload');
-const app = express();
+- After up server, you may call the local url to test, using the html form
 
-// default options
-app.use(fileUpload());
+ > http://localhost:8000/form
 
-app.post('/upload', function(req, res) {
-  if (Object.keys(req.files).length == 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
+- The upload API use the POST method and the following parameters:
 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
+  - formKey, to represents the identifier to one pack of images from one specific form;
+  - img+{i}, to represents the references of each image of the pack, where the i is an integer number sequence starting on 1 so the images are img1, img2, img3...
 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send('File uploaded!');
-  });
-});
-```
-
-**Your HTML file upload form:**
-```html
-<html>
-  <body>
-    <form ref='uploadForm' 
-      id='uploadForm' 
-      action='http://localhost:8000/upload' 
-      method='post' 
-      encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
-        <input type='submit' value='Upload!' />
-    </form>     
-  </body>
-</html>
-```
-
-## Multi-File Upload
-express-fileupload supports multiple file uploads at the same time.
-
-Let's say you have three files in your form, each of the inputs with the name `my_profile_pic`, `my_pet`, and `my_cover_photo`:
-```html
-<input type="file" name="my_profile_pic" />
-<input type="file" name="my_pet" />
-<input type="file" name="my_cover_photo" />
-```
-
-These uploaded files would be accessible like so:
-```javascript
-app.post('/upload', function(req, res) {
-  // Uploaded files:
-  console.log(req.files.my_profile_pic.name);
-  console.log(req.files.my_pet.name);
-  console.log(req.files.my_cover_photo.name);
-});
-```
-
+ > http://localhost:8000/upload (POST)
