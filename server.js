@@ -53,7 +53,7 @@ app.post('/upload', function(req, res) {
   // console.log('req.files >>>', req.files); // eslint-disable-line
 
   let files = req.files;
-  let formKey = req.formKey;
+  let formKey = req.body.formKey;
   let key="img",
   i = 1,
   t = 1;
@@ -64,13 +64,14 @@ app.post('/upload', function(req, res) {
       return res.status(500).send(err);
     }
     if(i==t) {
-      res.send('File(s) uploaded to: <br>' + uploadPath.join('<br>'));
+      res.send({status:1});
     }
   };
 
   while(files[key+i]){
     let file = files[key+i];
-    uploadPath[i-1] = __dirname + '/uploads/' + formKey + '/' + file.name;
+    //uploadPath[i-1] = __dirname + '/uploads/' + formKey + '/' + file.name;
+    uploadPath[i-1] = __dirname + '/uploads/' + file.name;
     file.mv(uploadPath[i-1], callbackResponse);
     i++;
   }
