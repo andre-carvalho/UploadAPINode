@@ -1,6 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const fs = require('fs');
 const app = express();
 const PORT = 8000;
 
@@ -37,7 +38,8 @@ app.post('/core/users/getbytoken', function(req, res) {
 
 
 app.post('/upload', function(req, res) {
-  let uploadPath=[];
+
+  console.log(req.body);
 
   if (!req.files || Object.keys(req.files).length == 0) {
     res.status(400).send('No files were uploaded.');
@@ -49,14 +51,11 @@ app.post('/upload', function(req, res) {
     return;
   }
 
-  // console.log('req.formKey: ', req.body.formKey);
-  // console.log('req.files >>>', req.files); // eslint-disable-line
-
   let files = req.files;
   let formKey = req.body.formKey;
-  let key="img",
-  i = 1,
-  t = 1;
+  let listSize = +req.body.listSize;
+  let key="img", i = 1, t = 1;
+  let outputDir=__dirname + '/uploads/' + formKey;
 
   let callbackResponse=function(err) {
     t++;// total of callback
@@ -64,15 +63,21 @@ app.post('/upload', function(req, res) {
       return res.status(500).send(err);
     }
     if(i==t) {
-      res.send({status:1});
+      res.send( (t==(listSize+1))?({status:1}):({status:0}));
     }
   };
 
+  let mkdir=function(dir) {
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+  };
+
+  mkdir(outputDir);
+
   while(files[key+i]){
     let file = files[key+i];
-    //uploadPath[i-1] = __dirname + '/uploads/' + formKey + '/' + file.name;
-    uploadPath[i-1] = __dirname + '/uploads/' + file.name;
-    file.mv(uploadPath[i-1], callbackResponse);
+    file.mv(outputDir + '/' + file.name, callbackResponse);
     i++;
   }
 
